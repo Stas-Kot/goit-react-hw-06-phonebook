@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import * as contactsActions from '../../redux/phonebook-actions';
 import { Form, BtnAddContact, Input } from './PhonebookForm.styles';
 
 class PhonebookForm extends Component {
@@ -59,4 +61,8 @@ class PhonebookForm extends Component {
   }
 }
 
-export default PhonebookForm;
+const mapDispatchToProps = dispatch => ({
+  handleSubmit: contact => dispatch(contactsActions.addContact(contact)),
+});
+
+export default connect(null, mapDispatchToProps)(PhonebookForm);

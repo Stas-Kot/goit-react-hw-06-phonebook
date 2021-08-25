@@ -1,22 +1,30 @@
 import { combineReducers } from 'redux';
-import actionTypes from './phonebook-types';
+import types from './phonebook-types';
 
 const itemsReducer = (state = [], { type, payload }) => {
   switch (type) {
-    case actionTypes.ADD:
+    case types.ADD:
       return state.find(savedContact => savedContact.name === payload.name)
         ? (alert(`${payload.name} is already in contacts`), [...state])
         : [...state, payload];
 
-    case actionTypes.DELETE:
-      return state.filter(item => item.id !== payload);
+    case types.DELETE:
+      return state.filter(({ id }) => id !== payload);
 
     default:
       return state;
   }
 };
 
-const filterReducer = (state = '', action) => state;
+const filterReducer = (state = '', { type, payload }) => {
+  switch (type) {
+    case types.FILTER:
+      return payload;
+
+    default:
+      return state;
+  }
+};
 
 export default combineReducers({
   items: itemsReducer,
